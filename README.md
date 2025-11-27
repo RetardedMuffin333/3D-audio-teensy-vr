@@ -9,27 +9,24 @@ This project implements a pipeline for **personalised binaural 3D-audio** using:
 - A **Teensy 4.x + Audio Shield** running a sketch that applies FIR filtering in real time.  
 - (Optionally) A 3D/VR environment (e.g. Unity) where a virtual sound source moves; spatial data (azimuth, distance) is sent via serial to the Teensy to update HRTF filters and volume.  
 
-This allows for spatial audio where the sound appears to come from specific directions — tailored to the listener’s own ears (based on HRIR).
+This allows for spatial audio where the sound appears to come from specific directions — tailored to the listener's own ears (based on HRIR).
 
 ---
 
 ## 📂 Repository Structure
 
+```
 3D-Audio-Teensy-VR/
-│
 ├── firmware/
-│ └── usb_vr.ino ← Teensy firmware (audio + FIR + HRTF filtering)
-│ └── hrtf_filters.h ← Auto-generated HRTF FIR coefficients
-│
+│   ├── usb_vr.ino                   (Teensy firmware - audio + FIR + HRTF filtering)
+│   └── hrtf_filters.h               (Auto-generated HRTF FIR coefficients)
 ├── matlab/
-│ └── export_hrir_to_teensy.m ← MATLAB script to export filters
-│ └── IRC_1038_C_HRIR.mat ← Example compensated HRIR dataset
-│
-├── unity/ ← Placeholder for Unity / 3D audio integration
-│
-└── README.md ← This file
-└── docs/ ← (Optional) documentation, diagrams, notes
-
+│   ├── export_hrir_to_teensy.m      (MATLAB script to export filters)
+│   └── IRC_1038_C_HRIR.mat          (Example compensated HRIR dataset)
+├── unity/                            (Placeholder for Unity / 3D audio integration)
+├── docs/                             (Optional documentation, diagrams, notes)
+└── README.md                         (This file)
+```
 
 > **Note:** There is no `.gitignore`, and example audio files (e.g. WAVs) are omitted by design.  
 > If you use your own audio or wish to demo sound playback, add those files locally (not committed in this repo).
@@ -150,4 +147,4 @@ setVolumeAccordingToDistance(distance);
 | MATLAB export script & example HRIR dataset | Your own HRIR files |
 | Teensy sketch + generated HRTF filters | Your own audio files (WAV / streaming) |
 | Unity folder (placeholder) | 3D scenes, controller scripts, head-tracking, UI |
-| Documentation folder (optional) | Extra notes / diagrams / demos
+| Documentation folder (optional) | Extra notes / diagrams / demos |
