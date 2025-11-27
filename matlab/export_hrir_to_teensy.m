@@ -2,9 +2,10 @@
 % Load HRIR data and export int16 FIR filters for Teensy
 %
 % User: put your HRIR .mat file here:
-hrirFile = 'IRC_1058_C_HRIR.mat';   % or your own .mat
 
 clear; clc;
+hrirFile = 'IRC_1038_C_HRIR.mat';   % or your own .mat
+
 load(hrirFile);  % must define l_eq_hrir_S, r_eq_hrir_S or similar
 
 numTaps = 128;           % number of FIR taps used on Teensy
@@ -42,8 +43,11 @@ for i = 1:numPos
 end
 
 % --- WRITE C HEADER --------------------------------------------------
-outFile = fullfile('..','firmware','hrtf_filters.h');  % go up into firmware/
+outFile = fullfile(fileparts(fileparts(mfilename('fullpath'))),'firmware','hrtf_filters.h');
 fid = fopen(outFile, 'w');
+if fid == -1
+    error('Failed to open file: %s', outFile);
+end
 
 fprintf(fid, '#ifndef HRTF_FILTERS_H\n#define HRTF_FILTERS_H\n\n');
 fprintf(fid, '// Generated from %s by export_hrir_to_teensy.m\n', hrirFile);
@@ -85,16 +89,17 @@ for i = 1:numPos
     for n = 1:numTaps
         fprintf(fid, '%d', R(i,n));
         if n < numTaps
-            fprintf(fid, ',' ); 
+            fprintf(fid, ',');
         end
     end
-    if i < numPos 
-        fprintf(fid, '}, \n');
-    else
+    if i < numPos
         fprintf(fid, '},\n');
+    else
+        fprintf(fid, '}\n');   % <--- no comma for the last row
     end
 end
 fprintf(fid, '};\n\n');
+
 
 fprintf(fid, '#endif // HRTF_FILTERS_H\n');
 fclose(fid);
