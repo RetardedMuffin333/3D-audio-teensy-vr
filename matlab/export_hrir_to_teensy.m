@@ -50,9 +50,11 @@ if fid == -1
 end
 
 fprintf(fid, '#ifndef HRTF_FILTERS_H\n#define HRTF_FILTERS_H\n\n');
+fprintf(fid, '#include <stdint.h>\n\n');   
 fprintf(fid, '// Generated from %s by export_hrir_to_teensy.m\n', hrirFile);
 fprintf(fid, '#define NUM_TAPS %d\n', numTaps);
 fprintf(fid, '#define NUM_POSITIONS %d\n\n', numPos);
+
 
 % Optional: azimuth list for info
 fprintf(fid, 'const float hrtfAzimuth[NUM_POSITIONS] = {\n');

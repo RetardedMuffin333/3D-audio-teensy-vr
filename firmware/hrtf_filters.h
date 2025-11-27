@@ -1,6 +1,8 @@
 #ifndef HRTF_FILTERS_H
 #define HRTF_FILTERS_H
 
+#include <stdint.h>
+
 // Generated from IRC_1038_C_HRIR.mat by export_hrir_to_teensy.m
 #define NUM_TAPS 128
 #define NUM_POSITIONS 24
